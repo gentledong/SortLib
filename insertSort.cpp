@@ -1,5 +1,7 @@
+/*
 插入排序的两种实现，insertSort_line是线性插入排序，参考STL源码中的实现。
 insertSort_binary是折半查找一下，来确定插入位置，更快。
+*/
 
 #include<stdio.h>
 #include<vector>
