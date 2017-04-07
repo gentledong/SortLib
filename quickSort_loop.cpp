@@ -1,3 +1,4 @@
+/*
 内部采用vector来实现，默认升序，默认元素是int。
 主要使用尾递归的方式来完成quickSort。
 
@@ -6,7 +7,7 @@ partition_median将[left,right]分成两部分。
 
 quickSort_loop是递归函数，采用尾递归来编写。
 内部有while循环控制，先做右边，再做左边。
-
+*/
 
 #include<stdio.h>
 #include<vector>
