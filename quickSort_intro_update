@@ -1,3 +1,4 @@
+/*
 思考了一下quickSort_intro，做出一些改进。
 把insertSort_line或insertSort_binary安置在quickSort_loop里面，对于每个小区间（也就是小于stl_threashold的[left,right]段），用插入排序来处理。
 
@@ -6,7 +7,7 @@
 由于quickSort和heapSort都是“就地”排序，因此这种方案可行。
 
 试验之后也能成功。
-
+*/
 class introSort {
 private:
 	void quickSort_loop(vector<int> &nums, const int &left, int right, int deep_limit) {
