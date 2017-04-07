@@ -1,3 +1,4 @@
+/*
 参考STL的sort函数，给出的实现。
 quickSort_loop中设计了stl_threshold常量和deep_limit变量，分别用来衡量区间长度和分割深度。
 区间长度小于stl_threshold就停止快排，分割深度多于2*lg(right-left+1）就将[left,right]区间用heapSort来排。
@@ -6,7 +7,7 @@ quickSort_intro函数中quickSort_loop结束，
 整个区间[0,nums.size()-1]是由很多小区间组成，这些小区间内部无序，但是彼此有先后顺序，所以整个区间算是基本有序。
 因此对[0,nums.size()-1]来一个insertSort_line，效率会很高。
 当然也可以用insertSort_binary来完成这个收尾工作。
-
+*/
 
 #include<stdio.h>
 #include<vector>
