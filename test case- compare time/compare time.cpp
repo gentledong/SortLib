@@ -2,21 +2,22 @@
 #include<time.h>
 #include<string.h>
 #include<Windows.h>
-
 #include<stdio.h>
 #include<vector>
+#include<functional>
+#include<time.h>
+#include<random>
+using std::srand;
 using std::vector;
 using std::swap;
 using std::less;
-#include<functional>
 using std::greater;
 
 void printVec(vector<int>::iterator left, vector<int>::iterator right) {
-	for (auto iter(left); iter < right; ++iter)printf("%d ", *iter); 
+	for (auto iter(left); iter < right; ++iter)printf("%d ", *iter);
 	printf("\n");
 	return;
 }//printVec
-
 void print_time(const char *head) {
 	SYSTEMTIME rawtime;
 	GetLocalTime(&rawtime);
@@ -51,7 +52,7 @@ void print_time(const char *head) {
 	if (isFirst == true) {
 		char tmp[64] = "";
 		const char week[][3] = { "日","一","二","三","四","五","六" };
-		sprintf(tmp, "星期%s %04d年%02d月%d日 %02d:%02d:%02d", week[rawtime.wDayOfWeek], rawtime.wYear,rawtime.wMonth, rawtime.wDay, rawtime.wHour, rawtime.wMinute, rawtime.wSecond);
+		sprintf(tmp, "星期%s %04d年%02d月%d日 %02d:%02d:%02d", week[rawtime.wDayOfWeek], rawtime.wYear, rawtime.wMonth, rawtime.wDay, rawtime.wHour, rawtime.wMinute, rawtime.wSecond);
 		printf("%s date/time is \"%s\"\n", head, tmp);
 		isFirst = false;
 	}
@@ -61,7 +62,6 @@ void print_time(const char *head) {
 	}//if else
 	return;
 }//print_time
-
 template<typename Elem, typename Storage = vector<Elem>, typename Compare = less<Elem> >
 class SortLib {//template <typename Elem> const 组合
 public:
@@ -166,7 +166,7 @@ private:
 				if (comp(nums[mid], tmpI) == true || nums[mid] == tmpI)low = mid + 1;
 				else high = mid - 1;
 			}//while
-			copy(nums.begin() + left + (high + 1), nums.begin() + left + i, nums.begin() + left + (high + 1 + 1));
+			copy(nums.begin() + (high + 1), nums.begin() + i, nums.begin() + (high + 1 + 1));
 			nums[high + 1] = tmpI;
 		}//for i
 		return;
@@ -177,7 +177,7 @@ private:
 		for (int i(left + 1); i < size; ++i) {
 			Elem temp(nums[i]);
 			if (comp(temp, nums[left]) == true) {
-				copy(nums.begin() + left, nums.begin() + left + i, nums.begin() + left + 1);
+				copy(nums.begin() + left, nums.begin() + i, nums.begin() + left + 1);
 				nums[left] = temp;
 				continue;
 			}//if
@@ -187,7 +187,7 @@ private:
 		}//for i
 		return;
 	}//insertSort_line
-	
+
 public:
 	//内省式排序，完全模仿sort源码
 	void quickSort_intro() {
@@ -198,7 +198,7 @@ public:
 		//insertSort_binary(left, right);
 		return;
 	}//quickSort_intro
-	
+
 public:
 	//归并排序的递归算法
 	void mergeSort2() {
@@ -335,12 +335,12 @@ public:
 		}//for d
 		return;
 	}//shellSort_binary
-	//插入排序，线性查找的
+	 //插入排序，线性查找的
 	void insertSort() {
 		insertSort_line(0, nums.size() - 1);
 		return;
 	}//insertSort
-	//插入排序，折半查找的
+	 //插入排序，折半查找的
 	void insertSort_binary() {
 		insertSort_binary(0, nums.size() - 1);
 		return;
@@ -351,6 +351,7 @@ public:
 	}//quickSort
 };
 
+//每个小段使用insertSort_line来处理
 class SortLib2 {
 private:
 	void quickSort_loop(const int &left, int right, int deep_limit) {
@@ -409,7 +410,7 @@ private:
 				if (nums[mid] <= tmpI)low = mid + 1;
 				else high = mid - 1;
 			}//while
-			copy(nums.begin() + left + (high + 1), nums.begin() + left + i, nums.begin() + left + (high + 1 + 1));
+			copy(nums.begin() + (high + 1), nums.begin() + i, nums.begin() + (high + 1 + 1));
 			nums[high + 1] = tmpI;
 		}//for i
 		return;
@@ -420,8 +421,8 @@ private:
 		for (int i(left + 1); i < size; ++i) {
 			int temp(nums[i]);
 			if (temp < nums[left]) {
-				copy(nums.begin() + left, nums.begin() + left + i, nums.begin() + left + 1);
-				nums[left] = temp;
+				copy(nums.begin() + left, nums.begin() + i, nums.begin() + left + 1);
+				nums[left] = temp; 
 				continue;
 			}//if
 			int j(i - 1);
@@ -465,7 +466,7 @@ public:
 private:
 	vector<int> nums;
 };
-
+//最后使用insertSort_binary来处理
 class SortLib3 {
 private:
 	void quickSort_loop(const int &left, int right, int deep_limit) {
@@ -522,7 +523,7 @@ private:
 				if (nums[mid] <= tmpI)low = mid + 1;
 				else high = mid - 1;
 			}//while
-			copy(nums.begin() + left + (high + 1), nums.begin() + left + i, nums.begin() + left + (high + 1 + 1));
+			copy(nums.begin() + (high + 1), nums.begin() + i, nums.begin() + (high + 1 + 1));
 			nums[high + 1] = tmpI;
 		}//for i
 		return;
@@ -533,7 +534,7 @@ private:
 		for (int i(left + 1); i < size; ++i) {
 			int temp(nums[i]);
 			if (temp < nums[left]) {
-				copy(nums.begin() + left, nums.begin() + left + i, nums.begin() + left + 1);
+				copy(nums.begin() + left, nums.begin() + i, nums.begin() + left + 1);
 				nums[left] = temp;
 				continue;
 			}//if
@@ -580,7 +581,7 @@ public:
 private:
 	vector<int> nums;
 };
-
+//每个小段使用insertSort_binary来处理
 class SortLib4 {
 private:
 	void quickSort_loop(const int &left, int right, int deep_limit) {
@@ -594,7 +595,7 @@ private:
 			quickSort_loop(mid, right, deep_limit);
 			right = mid - 1;
 		}//while
-		//insertSort_line(left, right);
+		 //insertSort_line(left, right);
 		insertSort_binary(left, right);
 		return;
 	}//quickSort_loop
@@ -639,7 +640,7 @@ private:
 				if (nums[mid] <= tmpI)low = mid + 1;
 				else high = mid - 1;
 			}//while
-			copy(nums.begin() + left + (high + 1), nums.begin() + left + i, nums.begin() + left + (high + 1 + 1));
+			copy(nums.begin() + (high + 1), nums.begin() + i, nums.begin() + (high + 1 + 1));
 			nums[high + 1] = tmpI;
 		}//for i
 		return;
@@ -650,7 +651,7 @@ private:
 		for (int i(left + 1); i < size; ++i) {
 			int temp(nums[i]);
 			if (temp < nums[left]) {
-				copy(nums.begin() + left, nums.begin() + left + i, nums.begin() + left + 1);
+				copy(nums.begin() + left, nums.begin() + i, nums.begin() + left + 1);
 				nums[left] = temp;
 				continue;
 			}//if
@@ -694,20 +695,137 @@ public:
 private:
 	vector<int> nums;
 };
-
+//最后使用insertSort_line来处理
+class SortLib5 {
+private:
+	void quickSort_loop(const int &left, int right, int deep_limit) {
+		while (right - left > stl_threshold) {
+			if (deep_limit == 0) {
+				heapSort(left, right);
+				return;
+			}//if
+			--deep_limit;
+			int mid = partition_median(left, right);
+			quickSort_loop(mid, right, deep_limit);
+			right = mid - 1;
+		}//while
+		return;
+	}//quickSort_loop
+	int partition_median(int left, int right) {
+		int pivot = medianOfThree(nums[left], nums[(left + right + 1) >> 1], nums[right]);
+		while (true) {
+			while (nums[left] < pivot)++left;
+			while (nums[right] > pivot)--right;
+			if (left >= right)return left;
+			swap(nums[left++], nums[right]);
+		}//while
+	}//partition_median
+	void heapSort(int left, int right) {
+		int size = right + 1;
+		for (int i((size - 1 - 1) >> 1); i >= left; --i)siftDown(i, size - 1);//初始建堆，从最后一个非终端结点至根结点
+		for (int i(size - 1); i>left; --i) {//重复执行移走堆顶及重建堆的操作
+			swap(nums[left], nums[i]);
+			siftDown(left, i - 1);
+		}//for i
+		return;
+	}//heapSort
+	void siftDown(int root, int end) {
+		int indexChild((root << 1) + 1);
+		while (indexChild <= end) {
+			if (indexChild + 1 <= end&&nums[indexChild] < nums[indexChild + 1])++indexChild;
+			if (nums[root] >= nums[indexChild])break;
+			swap(nums[root], nums[indexChild]);
+			root = indexChild;
+			indexChild = (root << 1) + 1;
+		}//while
+		return;
+	}//siftDown
+	void insertSort_binary(int left, int right) {
+		//折半插入排序，不带哨兵的
+		int size = right + 1;
+		for (int i(left + 1); i < size; ++i) {
+			if (nums[i] >= nums[i - 1])continue;
+			int tmpI(nums[i]);
+			int low(left), high(i - 1);
+			while (low <= high) {
+				int mid((low + high) >> 1);
+				if (nums[mid] <= tmpI)low = mid + 1;
+				else high = mid - 1;
+			}//while
+			copy(nums.begin() + (high + 1), nums.begin() + i, nums.begin() + (high + 1 + 1));
+			nums[high + 1] = tmpI;
+		}//for i
+		return;
+	}//insertSort_binary
+	void insertSort_line(int left, int right) {
+		//插入排序，顺序查找的，不带哨兵的
+		int size = right + 1;
+		for (int i(left + 1); i < size; ++i) {
+			int temp(nums[i]);
+			if (temp < nums[left]) {
+				copy(nums.begin() + left, nums.begin() + i, nums.begin() + left + 1);
+				nums[left] = temp;
+				continue;
+			}//if
+			int j(i - 1);
+			for (; nums[j] > temp; --j)nums[j + 1] = nums[j];
+			nums[j + 1] = temp;
+		}//for i
+		return;
+	}//insertSort_line
+private:
+	const int stl_threshold = 16;
+	int medianOfThree(const int &a, const int &b, const int &c) {
+		if (a < b) {
+			if (b < c)return b;//a<b<c
+			if (a < c)return c;//a<c<=b
+			return a;//b>a>=c
+		}//if
+		if (a < c)return a;//c>a>=b
+		if (b < c)return c;//a>=c>b
+		return b;//a>=b>=c
+	}//medianOfThree
+	int lg(int n) {//2^k<=n，求k值
+		int k(0);
+		for (; n > 1; n >>= 1) ++k;//1相当于2^0。
+		return k;
+	}//lg
+public:
+	void quickSort_intro() {
+		int left(0), right((int)nums.size() - 1);
+		quickSort_loop(left, right, 2 * lg(right - left + 1));
+		insertSort_line(left, right);
+		//insertSort_binary(left, right);
+		return;
+	}//quickSort_intro
+public:
+	SortLib5(const vector<int> &nums) {
+		this->nums = nums;
+		return;
+	}//SortLib5
+	void resetNums(const vector<int> &nums) {
+		this->nums = nums;
+		return;
+	}//resetNums
+private:
+	vector<int> nums;
+};
+int random(const int &a, const int &b) {//a<b,[a,b]
+	return (int)(0.5 + a + (1.0*rand() / RAND_MAX)*(b - a));
+}//random
 int main() {
 	//vector<int> nums{ 3,4,1,1,3,2,5,6,9,8,1,3,4,3,5 };
 	//vector<int> nums{ 3,2 };
 	//vector<int> nums{  };
-	vector<int> nums_{ 3,4,1,1,3,2,5,6,9,8,1,3,4,33,33,2,2,2,1,33,3 };
-	vector<int> nums(123161*2);
-	//printf("nums.size=%d\n",nums.size());
-	for (int i(0); i < 123161*2; ++i) {
-		int j(i % 21);
-		nums[i] = nums_[j];
+	//vector<int> nums_{ 3,4,1,1,3,2,5,6,9,8,1,3,4,33,33,2,2,2,1,33,3 };
+	srand((unsigned)time(NULL));
+	vector<int> nums(100000000);
+	printf("nums.size=%d\n",nums.size());
+	for (int i(0); i < 100000000; ++i) {
+		nums[i] = random(0, i);
 	}//for i
-
-	SortLib<int,vector<int>,greater<int> > mySort(nums_);
+	//SortLib<int, vector<int>, greater<int> > mySort(nums_);
+	SortLib<int> mySort(nums);
 	print_time("QuickSort_intro:");
 	mySort.quickSort_intro();
 	//mySort.mergeSort1();
@@ -720,15 +838,18 @@ int main() {
 	//mySort.shellSort();
 	//mySort.shellSort_binary();
 	//mySort.quickSort();
+	
 	print_time("Done:");
-	auto vec = mySort.getNums();
-	printVec(vec.begin(), vec.end());
+	
+	/*auto vec = mySort.getNums();
+	printVec(vec.begin(), vec.end());*/
 
-	/*SortLib2 mySort2(nums);
+	SortLib2 mySort2(nums);
 	print_time("QuickSort_intro2:");
 	mySort2.quickSort_intro();
 	print_time("Done:");
-
+	
+	
 	SortLib3 mySort3(nums);
 	print_time("QuickSort_intro3:");
 	mySort3.quickSort_intro();
@@ -737,7 +858,12 @@ int main() {
 	SortLib4 mySort4(nums);
 	print_time("QuickSort_intro4:");
 	mySort4.quickSort_intro();
-	print_time("Done:");*/
+	print_time("Done:");
+
+	SortLib5 mySort5(nums);
+	print_time("QuickSort_intro5:");
+	mySort5.quickSort_intro();
+	print_time("Done:");
 
 	return 0;
 }//main
