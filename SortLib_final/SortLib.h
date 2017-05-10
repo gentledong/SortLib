@@ -14,7 +14,6 @@ public:
 	SortLib(const Storage &nums) {
 		this->nums = nums;
 		numsIsReady = true;
-		return;
 	}//SortLib
 	void resetNums(const Storage &nums) {
 		this->nums = nums;
