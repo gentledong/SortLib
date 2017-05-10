@@ -69,7 +69,7 @@ private:
 				if (nums[mid] <= tmpI)low = mid + 1;
 				else high = mid - 1;
 			}//while
-			copy(nums.begin() + left + (high + 1), nums.begin() + left + i, nums.begin() + left + (high + 1 + 1));
+			copy(nums.begin() + (high + 1), nums.begin() + i, nums.begin() + (high + 1 + 1));
 			nums[high + 1] = tmpI;
 		}//for i
 		return;
@@ -80,7 +80,7 @@ private:
 		for (int i(left + 1); i < size; ++i) {
 			int temp(nums[i]);
 			if (temp < nums[left]) {
-				copy(nums.begin() + left, nums.begin() + left + i, nums.begin() + left + 1);
+				copy(nums.begin() + left, nums.begin() + i, nums.begin() + left + 1);
 				nums[left] = temp;
 				continue;
 			}//if
