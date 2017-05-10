@@ -94,7 +94,7 @@ void SortLib<Elem, Storage, Compare>::insertSort_binary(int left, int right) {
 			if (comp(nums[mid], tmpI) == true || nums[mid] == tmpI)low = mid + 1;
 			else high = mid - 1;
 		}//while
-		copy(nums.begin() + left + (high + 1), nums.begin() + left + i, nums.begin() + left + (high + 1 + 1));
+		copy(nums.begin() + (high + 1), nums.begin() + i, nums.begin() + (high + 1 + 1));
 		nums[high + 1] = tmpI;
 	}//for i
 	return;
@@ -107,7 +107,7 @@ void SortLib<Elem, Storage, Compare>::insertSort_line(int left, int right) {
 	for (int i(left + 1); i < size; ++i) {
 		Elem temp(nums[i]);
 		if (comp(temp, nums[left]) == true) {
-			copy(nums.begin() + left, nums.begin() + left + i, nums.begin() + left + 1);
+			copy(nums.begin() + left, nums.begin() + i, nums.begin() + left + 1);
 			nums[left] = temp;
 			continue;
 		}//if
