@@ -3,6 +3,9 @@
 insertSort_binary是折半查找一下，来确定插入位置，更快。
 */
 
+插入排序的两种实现，insertSort_line是线性插入排序，参考STL源码中的实现。
+insertSort_binary是折半查找一下，来确定插入位置，更快。
+
 #include<stdio.h>
 #include<vector>
 using std::vector;
@@ -20,7 +23,7 @@ void insertSort_binary(vector<int> &nums, int left, int right) {
 			if (nums[mid] <= tmpI)low = mid + 1;
 			else high = mid - 1;
 		}//while
-		copy(nums.begin() + left + (high + 1), nums.begin() + left + i, nums.begin() + left + (high + 1 + 1));
+		copy(nums.begin() + (high + 1), nums.begin() + i, nums.begin() + (high + 1 + 1));
 		nums[high + 1] = tmpI;
 	}//for i
 	return;
@@ -32,7 +35,7 @@ void insertSort_line(vector<int> &nums, int left, int right) {
 	for (int i(left + 1); i < size; ++i) {
 		int temp(nums[i]);
 		if (temp < nums[left]) {
-			copy(nums.begin() + left, nums.begin() + left + i, nums.begin() + left + 1);
+			copy(nums.begin() + left, nums.begin() + i, nums.begin() + left + 1);
 			nums[left] = temp;
 			continue;
 		}//if
